@@ -1,0 +1,14 @@
+---
+expeditor:
+  defaults:
+    buildkite:
+      timeout_in_minutes: 45
+
+steps:
+  - label: ruby-2.6
+    command:
+      - /workdir/go.sh
+    expeditor:
+      executor:
+        docker:
+          image: ruby:2.6
