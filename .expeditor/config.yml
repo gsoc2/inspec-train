@@ -1,0 +1,24 @@
+# Documentation available at https://expeditor.chef.io/docs/getting-started/
+---
+
+pipelines:
+ - verify:
+    description: Master:Master tests for inspec:train
+    public: true
+
+slack:
+ notify_channel: inspec-notify
+
+subscriptions:
+ - workload: pull_request_opened:{{github_repo}}:{{release_branch}}:*
+   actions:
+    - built_in:github_auto_assign_author:
+       only_if_team_member:
+        - inspec/owners
+        - inspec/inspec-core-team
+ - workload: pull_request_merged:inspec/train:master:*
+   actions:
+    - trigger_pipeline:verify
+ - workload: pull_request_merged:inspec/inspec:master:*
+   actions:
+    - trigger_pipeline:verify
